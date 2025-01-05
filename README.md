@@ -2,6 +2,10 @@
 
 This project is an AI chatbot designed to answer questions based on provided information. In this example, the chatbot uses data from Aroma Beans Coffee shop to respond to user queries.
 
+## 🚀 Live Demo
+
+🔗 [Visit the Live Site](https://nikhil-87.github.io/chatbot/)
+
 ## Features
 
 - **Interactive Chat Interface**: Users can interact with the chatbot through a user-friendly chat interface.
