@@ -26,7 +26,7 @@ const App = () => {
     // Combine all user and model messages into a single string prompt
     const prompt = history.map(h => `${h.role}: ${h.text}`).join('\n');
     try {
-      const response = await fetch('http://localhost:3001/api/generate', {
+      const response = await fetch('https://chatbot-7gvt.onrender.com/api/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prompt })
