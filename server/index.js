@@ -21,6 +21,7 @@ app.use(express.json());
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
 app.post('/api/generate', async (req, res) => {
+  console.log('Received request at /api/generate from:', req.headers.origin);
   try {
     const { prompt, model } = req.body;
     const response = await ai.models.generateContent({
