@@ -23,30 +23,18 @@ const App = () => {
         { role: "model", text, isError },
       ]);
     };
-    history = history.map(({ role, text }) => ({ role, parts: [{ text }] }));
-
-    //format chat history for api request
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ contents: history }),
-    };
-
+    // Combine all user and model messages into a single string prompt
+    const prompt = history.map(h => `${h.role}: ${h.text}`).join('\n');
     try {
-      //make the api call to get the bot's response
-      const response = await fetch(
-        import.meta.env.VITE_API_URL,
-        requestOptions
-      );
+      const response = await fetch('http://localhost:3001/api/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt })
+      });
       const data = await response.json();
       if (!response.ok)
-        throw new Error(data.error.message || "Something went wrong!");
-      console.log(data);
-      //clean and update chat history with bot's response
-      const apiResponseText = data.candidates[0].content.parts[0].text
-        .replace(/\*\*(.*?)\*\*/g, "$1")
-        .trim();
-      updateHistory(apiResponseText);
+        throw new Error(data.error || "Something went wrong!");
+      updateHistory(data.text.trim());
     } catch (error) {
       updateHistory(error.message, true);
     }
