@@ -7,7 +7,15 @@ import { GoogleGenAI } from '@google/genai';
 const app = express();
 const port = process.env.PORT || 3001;
 
-app.use(cors());
+app.use(cors({
+  origin: [
+    'http://localhost:5173',
+    'https://nikhil-87.github.io',
+    'https://nikhil-87.github.io/chatbot'
+  ],
+  methods: ['GET', 'POST'],
+  credentials: true
+}));
 app.use(express.json());
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
